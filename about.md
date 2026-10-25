@@ -4,27 +4,18 @@ title: Σχετικά
 permalink: /about/
 ---
 
-Εκτός από blog posts μπορείτε να έχετε και permanent pages, τα αρχεία από τα οποία παράγονται αυτές βρίσκονται στο root φακελο του ιστοτόπου
-αλλά μπορούν στο front matter τους να δηλώνουν σε ποιο permanent link αντιστοιχούν.  
-Παράδειγμα μιας permanent page αποτελεί η τρέχουσα σελίδα η οποία περιγράφει λίγα στοιχεία για το theme _minima_ στο οποίο βασίζεται αυτός ο ιστότοπος.
+## Το έργο
 
-**_ToDo_ σας**:  
+Ο ιστοχώρος **Γαστρονομική Πολιτιστική Κληρονομιά** παρουσιάζει την ελληνική γαστρονομία ως ζωντανό κομμάτι της πολιτιστικής μας ταυτότητας: παραδοσιακά πιάτα, τοπικά προϊόντα, συνταγές και τα μέρη όπου μπορεί κανείς να τα γευτεί.
 
-- Δημιουργήστε μια ακόμη permanent page η οποία να αναφέρει τα μέλη της ομάδας σας.  
-Η page να έχει όνομα αρχείου `team.md` και να αντιστοιχεί στο permanent link `/team/`
+## Τι θα βρείτε εδώ
 
----
+- **Σημεία ενδιαφέροντος (POIs):** τόποι και γεύσεις ανά περιοχή, με περιγραφή και ιστορικό πλαίσιο.
+- **Αναρτήσεις:** ιστορίες, παραδόσεις και ιδέες για γαστρονομικές διαδρομές.
+- **Η ομάδα:** γνωρίστε τους δημιουργούς του ιστοχώρου στη σελίδα [Ομάδα](/team/).
 
+## Σχετικά με την εργασία
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+Ο ιστοχώρος αναπτύχθηκε στο πλαίσιο του μαθήματος *Εργαλεία Προβολής Τουριστικού και Πολιτισμικού Προϊόντος* του ΠΜΣ *Ψηφιακές Εφαρμογές & Καινοτομία* του Ιονίου Πανεπιστημίου.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+Βασίζεται στο [Jekyll](https://jekyllrb.com/) και στο θέμα [Minima](https://github.com/jekyll/minima).
