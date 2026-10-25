@@ -1,7 +1,14 @@
-jekyll:
-  image: jekyll/jekyll:3.8
-  command: sh -c 'gem install jekyll bundler; bundler; bundle exec jekyll serve -b "" --host 0.0.0.0 --livereload'
-  ports:
-    - 4000:4000
-  volumes:
-    - .:/srv/jekyll
+services:
+  jekyll:
+    image: ruby:3.2
+    working_dir: /srv/jekyll
+    volumes:
+      - .:/srv/jekyll
+      - bundle:/usr/local/bundle
+    ports:
+      - "4000:4000"
+      - "35729:35729"
+    command: sh -c "bundle install && bundle exec jekyll serve -b '' --host 0.0.0.0 --force_polling --livereload"
+
+volumes:
+  bundle:
