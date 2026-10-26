@@ -259,13 +259,18 @@ table td {
 }
 
 .site-header::before {
-  content: "";
-  display: block;
-  height: 12px;
-  background-color: var(--paper);
-  background-repeat: repeat-x;
-  background-size: 24px 12px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'><path d='M0 11 H22 V1 H4 V7 H16 V4 H9' fill='none' stroke='%231f5f8b' stroke-width='1.6'/></svg>");
+    content: "";
+    display: block;
+    height: 6px;
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--olive) 0px,
+        var(--olive) 2px,        
+        transparent 2px,
+        transparent 4px,        
+        var(--olive) 4px,
+        var(--olive) 6px        
+    );
 }
 
 .site-title {
