@@ -1,6 +1,7 @@
 ---
 layout: poi
 wikidatum: Q167895
+dish: Q110215765
 title: Καλαμάτα
 ---
 
