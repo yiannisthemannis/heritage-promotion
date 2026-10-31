@@ -2,7 +2,6 @@
 layout: page
 title: Ελληνικά Πιάτα
 permalink: /pois/
-
 ---
 
 <div class="grid-container">
