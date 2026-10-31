@@ -1,7 +1,0 @@
----
-layout: poi
-wikidatum: Q207239
-title:  Κύθηρα
----
-
-Sample text
