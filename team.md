@@ -9,12 +9,10 @@ permalink: /team/
 <div class="grid-container">
   <div class="card">
     <h3>Λευκοθέα Παππά</h3>
-    <p class="post-meta">Φοιτήτρια ΠΜΣ</p>
   </div>
   
   <div class="card">
     <h3>Ιωάννης Αυλωνίτης</h3>
-    <p class="post-meta">Φοιτητής ΠΜΣ</p>
   </div>
 </div>
 
