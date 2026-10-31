@@ -3,8 +3,8 @@ description: >-
   Ο ιστοχώρος αυτός αναπτύχτηκε από τους Λευκοθέα Παπά & Αυλωνίτης Ιωάννης
   στα πλαίσια εργασίας του μαθήματος Εργαλεία Προβολής Τουριστικού και Πολιτισμικού Προϊόντος
   του ΠΜΣ Ψηφιακές Εφαρμογές & Καινοτομία του Ιονίου Πανεπιστημίου.
+url: "https://riggas-ionio.github.io"
 baseurl: "/heritage-promotion"
-url: "https://github.com/riggas-ionio/heritage-promotion"
 github_username: riggas-ionio
 
 markdown: kramdown
