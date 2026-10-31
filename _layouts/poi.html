@@ -30,6 +30,70 @@ load_leaflet: 1
 <script>var wikidatum = '{{page.wikidatum}}'</script>
 <script src="{{ '/assets/js/get_wiki_item.js' | relative_url }}"></script>
 
+<script>
+(function () {
+  var COMMONS = 'https://commons.wikimedia.org/wiki/Special:FilePath/';
+  var img = document.getElementById('wikidata_img');
+  if (!img || typeof wikidatum === 'undefined') return;
+
+  function claimFile(entity, props) {
+    var claims = entity.claims || {};
+    for (var i = 0; i < props.length; i++) {
+      var list = claims[props[i]];
+      if (list && list.length && list[0].mainsnak.datavalue) {
+        return list[0].mainsnak.datavalue.value;
+      }
+    }
+    return null;
+  }
+
+  function commonsUrl(file) {
+    return COMMONS + encodeURIComponent(file) + '?width=900';
+  }
+
+  function wikipediaThumb(entity) {
+    var sl = entity.sitelinks || {};
+    var lang = sl.elwiki ? 'el' : (sl.enwiki ? 'en' : null);
+    if (!lang) return Promise.resolve(null);
+    var title = sl[lang + 'wiki'].title.replace(/ /g, '_');
+    return fetch('https://' + lang + '.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(title))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { return d && d.thumbnail ? d.thumbnail.source : null; })
+      .catch(function () { return null; });
+  }
+
+  function show(src) {
+    img.src = src;
+    img.style.display = 'block';
+  }
+
+  fetch('https://www.wikidata.org/w/api.php?action=wbgetentities&ids=' + wikidatum +
+        '&props=claims|sitelinks&format=json&origin=*')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var e = data.entities && data.entities[wikidatum];
+      if (!e) return;
+
+      // Has a main photo: leave it to get_wiki_item.js
+      if (claimFile(e, ['P18'])) return;
+
+      var view = claimFile(e, ['P8517', 'P4291', 'P3451']);
+      if (view) { show(commonsUrl(view)); return; }
+
+      return wikipediaThumb(e).then(function (thumb) {
+        if (thumb) { show(thumb); return; }
+        var sym = claimFile(e, ['P94', 'P41']);
+        if (sym) { show(commonsUrl(sym)); return; }
+        img.style.display = 'none';
+      });
+    })
+    .catch(function () { img.style.display = 'none'; });
+
+  // If any image URL turns out to be broken, hide the box
+  img.addEventListener('error', function () { img.style.display = 'none'; });
+})();
+</script>
+
 {% if page.dish %}
 <script>
 (function () {
