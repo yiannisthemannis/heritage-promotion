@@ -2,7 +2,6 @@ layout: page
 title: Ομάδα
 permalink: /team/
 ---
-
 ## Τα μέλη της ομάδας
 
 <div class="grid-container">
