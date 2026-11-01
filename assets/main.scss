@@ -595,3 +595,8 @@ ul li a:hover, .content ul li a:hover, .wrapper ul li a:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08) !important;
     border-color: #d8cca3 !important;
 }
+.site-header, header, .site-footer, footer {
+    border-top: none !important;
+    border-bottom: none !important;
+    background-image: none !important;
+    box-shadow: none !important;
