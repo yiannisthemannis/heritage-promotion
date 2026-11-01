@@ -600,3 +600,29 @@ ul li a:hover, .content ul li a:hover, .wrapper ul li a:hover {
     border-bottom: none !important;
     background-image: none !important;
     box-shadow: none !important;
+/* Δυναμική μετατροπή των λιστών σε κουτιά/κάρτες με εφέ */
+ul:not(.site-nav) li, .content ul li, .wrapper ul li {
+    list-style: none !important;
+    margin-bottom: 15px !important;
+}
+
+ul:not(.site-nav) li a, .content ul li a, .wrapper ul li a {
+    display: block !important;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    padding: 20px 25px !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    color: #8c3b2b !important;
+    border: 1px solid #eae2d0 !important;
+    border-left: 6px solid #8c3b2b !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+}
+
+ul:not(.site-nav) li a:hover, .content ul li a:hover, .wrapper ul li a:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+    background-color: #fffaf5 !important;
+}
