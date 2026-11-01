@@ -94,7 +94,8 @@ load_leaflet: 1
       var e = data.entities && data.entities[wikidatum];
       if (!e) return;
 
-      if (claimFile(e, ['P18'])) return;
+      var p18Img = claimFile(e, ['P18']);
+      if (p18Img) { show(commonsUrl(p18Img)); return; }
 
       var view = claimFile(e, ['P8517', 'P4291', 'P3451']);
       if (view) { show(commonsUrl(view)); return; }
