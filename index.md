@@ -18,20 +18,22 @@ layout: page
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    var map = L.map('map').setView([38.5, 20.7], 8);
+    var map = L.map('map').setView([38.5, 20.7], 6);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    var wikidataIds = [
+    var poiUrls = {
         {% for poi in site.pois %}
             {% if poi.wikidata_id %}
-                "wd:{{ poi.wikidata_id }}",
+                "{{ poi.wikidata_id }}": "{{ poi.url | relative_url }}",
             {% endif %}
         {% endfor %}
-    ];
+    };
+
+    var wikidataIds = Object.keys(poiUrls).map(id => "wd:" + id);
 
     if (wikidataIds.length === 0) return;
 
@@ -49,17 +51,36 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch(endpointUrl, { headers: { 'Accept': 'application/sparql-results+json' } })
         .then(response => response.json())
         .then(data => {
+            var bounds = [];
+
             data.results.bindings.forEach(function(row) {
                 var point = row.coord.value.replace("Point(", "").replace(")", "").split(" ");
                 var lon = parseFloat(point[0]);
                 var lat = parseFloat(point[1]);
                 var title = row.itemLabel.value;
 
-                L.marker([lat, lon])
-                 .addTo(map)
-                 .bindPopup("<b>" + title + "</b>");
+                var qid = row.item.value.split('/').pop();
+                var pageUrl = poiUrls[qid];
+
+                bounds.push([lat, lon]);
+
+                var marker = L.marker([lat, lon]).addTo(map);
+
+                if (pageUrl) {
+                    marker.bindPopup("<b><a href='" + pageUrl + "'>" + title + "</a></b>");
+
+                    marker.on('click', function() {
+                        window.location.href = pageUrl;
+                    });
+                } else {
+                    marker.bindPopup("<b>" + title + "</b>");
+                }
             });
+
+            if (bounds.length > 0) {
+                map.fitBounds(bounds, { padding: [30, 30] });
+            }
         })
-        .catch(error => console.error('Σφάλμα κατά τη φόρτωση από Wikidata:', error));
+        .catch(error => console.error('Σφάλμα:', error));
 });
 </script>
