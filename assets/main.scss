@@ -562,3 +562,19 @@ table td {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   border: 1px solid #e0e0e0;
 }
+
+.poi-card, .grid-item, .card, li a {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid #eae2d0;
+    border-left: 5px solid #6b7a3a;
+    transition: all 0.3s ease;
+}
+
+.poi-card:hover, .grid-item:hover, .card:hover, li a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-color: #d8cca3;
+}
