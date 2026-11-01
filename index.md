@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var poiUrls = {
         {% for poi in site.pois %}
-            {% if poi.wikidata_id %}
-                "{{ poi.wikidata_id }}": "{{ poi.url | relative_url }}",
+            {% if poi.wikidatum %}
+                "{{ poi.wikidatum }}": "{{ poi.url | relative_url }}",
             {% endif %}
         {% endfor %}
     };
