@@ -18,5 +18,5 @@ collections:
 header_pages:
   - about.md
   - pois.md
-  - team.md
   - quiz.html
+  - team.md
