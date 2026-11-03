@@ -15,3 +15,8 @@ plugins:
 collections:
   pois:
     output: true
+header_pages:
+  - about.md
+  - pois.md
+  - team.md
+  - quiz.html
