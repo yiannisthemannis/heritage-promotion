@@ -18,27 +18,27 @@ layout: page
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    var map = L.map('map').setView([38.5, 20.7], 6);
+var map = L.map('map').setView([38.5, 20.7], 6);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap contributors'
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+maxZoom: 19,
+attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    var poiUrls = {
+var poiUrls = {
         {% for poi in site.pois %}
             {% if poi.wikidatum %}
-                "{{ poi.wikidatum }}": "{{ poi.url | relative_url }}",
+"{{ poi.wikidatum }}": "{{ poi.url | relative_url }}",
             {% endif %}
         {% endfor %}
     };
 
-    var wikidataIds = Object.keys(poiUrls).map(id => "wd:" + id);
+var wikidataIds = Object.keys(poiUrls).map(id => "wd:" + id);
 
-    if (wikidataIds.length === 0) return;
+if (wikidataIds.length === 0) return;
 
-    var idsString = wikidataIds.join(" ");
-    var sparqlQuery = `
+var idsString = wikidataIds.join(" ");
+var sparqlQuery = `
         SELECT ?item ?itemLabel ?coord WHERE {
             VALUES ?item { ${idsString} }
             ?item wdt:P625 ?coord .
@@ -46,33 +46,27 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     `;
 
-    var endpointUrl = 'https://query.wikidata.org/sparql?query=' + encodeURIComponent(sparqlQuery);
+var endpointUrl = 'https://query.wikidata.org/sparql?query=' + encodeURIComponent(sparqlQuery);
 
-    fetch(endpointUrl, { headers: { 'Accept': 'application/sparql-results+json' } })
+fetch(endpointUrl, { headers: { 'Accept': 'application/sparql-results+json' } })
         .then(response => response.json())
         .then(data => {
-            var bounds = [];
-            var seen = {};
+var bounds = [];
 
             data.results.bindings.forEach(function(row) {
-            var qidCheck = row.item.value.split('/').pop();
-            if (seen[qidCheck]) return;
-            seen[qidCheck] = true;
+var point = row.coord.value.replace("Point(", "").replace(")", "").split(" ");
+var lon = parseFloat(point[0]);
+var lat = parseFloat(point[1]);
+var title = row.itemLabel.value;
 
-            data.results.bindings.forEach(function(row) {
-                var point = row.coord.value.replace("Point(", "").replace(")", "").split(" ");
-                var lon = parseFloat(point[0]);
-                var lat = parseFloat(point[1]);
-                var title = row.itemLabel.value;
-
-                var qid = row.item.value.split('/').pop();
-                var pageUrl = poiUrls[qid];
+var qid = row.item.value.split('/').pop();
+var pageUrl = poiUrls[qid];
 
                 bounds.push([lat, lon]);
 
-                var marker = L.marker([lat, lon]).addTo(map);
+var marker = L.marker([lat, lon]).addTo(map);
 
-                if (pageUrl) {
+if (pageUrl) {
                     marker.bindPopup("<b><a href='" + pageUrl + "'>" + title + "</a></b>");
 
                     marker.on('click', function() {
@@ -83,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
 
-            if (bounds.length > 0) {
+if (bounds.length > 0) {
                 map.fitBounds(bounds, { padding: [30, 30] });
             }
         })
