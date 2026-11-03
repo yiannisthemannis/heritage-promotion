@@ -1,0 +1,384 @@
+---
+layout: default
+title: Κουίζ & Βικιπαίδεια Γεύσεων
+---
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Γαστρονομική Παιδεία & Κουίζ</title>
+    <style>
+        :root {
+            --primary-color: #7A2E1C;
+            --accent-color: #D4A359;
+            --bg-color: #FDFBF7;
+            --card-bg: #FFFFFF;
+            --text-color: #333333;
+            --border-color: #E2D7C5;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        /* Ταμπέλες Πλοήγησης */
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: inherit;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Styling Κουίζ */
+        .quiz-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .question-number {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin: 15px 0 25px 0;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background-color: #F9F6F0;
+            border: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-radius: 8px;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option-btn:hover {
+            background-color: #EFE8DC;
+        }
+
+        .correct {
+            background-color: #2E7D32 !important;
+            color: white !important;
+            border-color: #2E7D32 !important;
+        }
+
+        .incorrect {
+            background-color: #C62828 !important;
+            color: white !important;
+            border-color: #C62828 !important;
+        }
+
+        .score-card {
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Styling Wikipedia Search */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .wiki-result {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            min-height: 150px;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Γαστρονομική Πολιτιστική Κληρονομιά</h1>
+        <p>Εξερευνήστε τις γεύσεις και τις παραδόσεις της Ελλάδας</p>
+    </header>
+
+    <!-- Ταμπέλες Επιλογής -->
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="switchTab('quiz')">🧠 Κουίζ Γνώσεων</button>
+        <button class="tab-btn" onclick="switchTab('wiki')">📖 Βικιπαίδεια Γεύσεων</button>
+    </div>
+
+    <!-- ΕΝΟΤΗΤΑ 1: ΚΟΥΙΖ -->
+    <div id="quiz-tab" class="tab-content active">
+        <div class="quiz-card">
+            <div id="quiz-game">
+                <div class="question-number" id="q-number">Ερώτηση 1 από 3</div>
+                <div class="question-text" id="q-text">Φόρτωση ερώτησης...</div>
+                <div class="options-grid" id="options-container"></div>
+            </div>
+
+            <div id="quiz-result" class="score-card hide">
+                <h2>Αποτελέσματα Κουίζ</h2>
+                <p id="score-details"></p>
+                <div id="badge-container" class="badge"></div>
+                <br>
+                <button class="action-btn" onclick="restartQuiz()">Παίξτε ξανά</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ΕΝΟΤΗΤΑ 2: WIKIPEDIA EXPLORER -->
+    <div id="wiki-tab" class="tab-content">
+        <div class="quiz-card">
+            <h2 style="color: var(--primary-color); margin-top:0;">Αναζήτηση στη Γαστρονομική Βικιπαίδεια</h2>
+            <p>Γράψτε ένα ελληνικό προϊόν ή πιάτο (π.χ. <i>Φέτα, Μουσακάς, Γραβιέρα Νάξου</i>) για άντληση πληροφοριών από τη Βικιπαίδεια:</p>
+            
+            <div class="search-box">
+                <input type="text" id="wiki-input" class="search-input" placeholder="π.χ. Φέτα" value="Φέτα">
+                <button class="action-btn" style="margin:0;" onclick="searchWikipedia()">Αναζήτηση</button>
+            </div>
+
+            <div id="wiki-result" class="wiki-result">
+                <i>Πατήστε "Αναζήτηση" για να εμφανιστούν πληροφορίες...</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- ΔΕΔΟΜΕΝΑ ΚΟΥΙΖ ---
+    const quizData = [
+        {
+            question: "Ποιο από τα παρακάτω τυριά είναι προϊόν Π.Ο.Π. (Προστατευόμενης Ονομασίας Προέλευσης) από τη Νάξο;",
+            options: ["Φέτα", "Γραβιέρα Νάξου", "Μετσόβονε", "Κασέρι"],
+            answer: 1
+        },
+        {
+            question: "Από ποια περιοχή της Ελλάδας κατάγεται παραδοσιακά η αλευρόπιτα (ή κασιάτα);",
+            options: ["Ήπειρος", "Κρήτη", "Μυτιλήνη", "Πελοπόννησος"],
+            answer: 0
+        },
+        {
+            question: "Τι είναι το 'Ξινόχοντρο' που συναντάμε στην κρητική κουζίνα;",
+            options: ["Είδος τοπικού τυριού", "Γλυκό του κουταλιού", "Παραδοσιακό ζυμαρικό με ξινόγαλο & χόνδρο σιταριού", "Ποικιλία κρασιού"],
+            answer: 2
+        }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        const q = quizData[currentQ];
+        document.getElementById('q-number').innerText = `Ερώτηση ${currentQ + 1} από ${quizData.length}`;
+        document.getElementById('q-text').innerText = q.question;
+        
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
+        q.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => selectOption(index, btn);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function selectOption(selectedIndex, btn) {
+        const correctIndex = quizData[currentQ].answer;
+        const buttons = document.querySelectorAll('.option-btn');
+        
+        buttons.forEach(b => b.style.pointerEvents = 'none');
+
+        if (selectedIndex === correctIndex) {
+            btn.classList.add('correct');
+            score++;
+        } else {
+            btn.classList.add('incorrect');
+            buttons[correctIndex].classList.add('correct');
+        }
+
+        setTimeout(() => {
+            currentQ++;
+            if (currentQ < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }, 1200);
+    }
+
+    function showResults() {
+        document.getElementById('quiz-game').classList.add('hide');
+        const resultDiv = document.getElementById('quiz-result');
+        resultDiv.classList.remove('hide');
+
+        document.getElementById('score-details').innerText = `Συγκεντρώσατε ${score} από τις ${quizData.length} σωστές απαντήσεις!`;
+
+        let badgeText = "";
+        if (score === quizData.length) badgeText = "🏆 Master της Ελληνικής Γαστρονομίας!";
+        else if (score >= 1) badgeText = "🌿 Καλός Γνώστης της Παράδοσης!";
+        else badgeText = "🍲 Αρχάριος Εξερευνητής!";
+
+        document.getElementById('badge-container').innerText = badgeText;
+    }
+
+    function restartQuiz() {
+        currentQ = 0;
+        score = 0;
+        document.getElementById('quiz-result').classList.add('hide');
+        document.getElementById('quiz-game').classList.remove('hide');
+        loadQuestion();
+    }
+
+    // --- WIKIPEDIA API INTEGRATION ---
+    async function searchWikipedia() {
+        const query = document.getElementById('wiki-input').value.trim();
+        const resultDiv = document.getElementById('wiki-result');
+
+        if (!query) return;
+
+        resultDiv.innerHTML = "<i>Αναζήτηση στη Βικιπαίδεια...</i>";
+
+        try {
+            const url = `https://el.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                resultDiv.innerHTML = "<p>Δεν βρέθηκαν πληροφορίες για αυτόν τον όρο. Δοκιμάστε κάποια άλλη λέξη (π.χ. Φέτα, Μουσακάς).</p>";
+                return;
+            }
+
+            const data = await response.json();
+            
+            let html = `<h3>${data.title}</h3>`;
+            if (data.thumbnail) {
+                html += `<img src="${data.thumbnail.source}" style="max-width:200px; float:right; margin-left:15px; border-radius:8px;">`;
+            }
+            html += `<p>${data.extract}</p>`;
+            html += `<a href="${data.content_urls.desktop.page}" target="_blank" style="color:var(--primary-color); font-weight:bold;">Διαβάστε περισσότερα στη Wikipedia &rarr;</a>`;
+
+            resultDiv.innerHTML = html;
+
+        } catch (error) {
+            resultDiv.innerHTML = "<p>Σφάλμα κατά την ανάκτηση δεδομένων.</p>";
+        }
+    }
+
+    // --- ΠΛΟΗΓΗΣΗ TAB ---
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+        if (tabName === 'quiz') {
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.getElementById('quiz-tab').classList.add('active');
+        } else {
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            document.getElementById('wiki-tab').classList.add('active');
+            searchWikipedia(); // Αυτόματη πρώτη αναζήτηση
+        }
+    }
+
+    // Αρχικοποίηση
+    loadQuestion();
+</script>
+
+</body>
+</html>
