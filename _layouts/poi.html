@@ -19,7 +19,7 @@ load_leaflet: 1
     
     <p id="wikidata_location" style="font-style:italic; color:#6b7a3a;"></p>
 
-    <img id="wikidata_img" style="width:100%; border-radius:8px; margin-top:10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);" />
+    <img id="wikidata_img" style="display:none; width:100%; height:auto; max-height:480px; object-fit:contain; background:#f6f1e7; border-radius:8px; margin-top:10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);" />
   </div>
 
   <!-- ΔΕΞΙΑ ΣΤΗΛΗ: Χάρτης & Κάρτα Φαγητού -->
@@ -30,7 +30,9 @@ load_leaflet: 1
     <div id="dish" style="display:none; padding:20px; background:#fff; border:1px solid #e6dccb; border-left:5px solid #6b7a3a; border-radius:10px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
       <h2 id="dish_title" style="margin-top:0; color:#2b2523;"></h2>
       <p id="dish_descr" style="color:#7d776d; font-size:0.95rem;"></p>
-      <img id="dish_img" style="width:100%; max-height:280px; object-fit:cover; border-radius:6px; display:none; margin-top:10px;" alt="">
+      <a id="dish_img_link" href="#" target="_blank" rel="noopener" style="display:none; margin-top:10px;">
+        <img id="dish_img" alt="" style="display:block; width:100%; height:auto; max-height:420px; object-fit:contain; background:#f6f1e7; border-radius:6px;">
+      </a>
       <p style="margin-bottom:0; margin-top:12px;"><a id="dish_link" target="_blank" rel="noopener" style="color:#8c3b2b; font-weight:600; text-decoration:none;"></a></p>
     </div>
     {% endif %}
@@ -136,10 +138,12 @@ load_leaflet: 1
       if (p18 && p18[0].mainsnak.datavalue) {
         var file = p18[0].mainsnak.datavalue.value;
         var img = document.getElementById('dish_img');
+        var imgLink = document.getElementById('dish_img_link');
         img.src = 'https://commons.wikimedia.org/wiki/Special:FilePath/' +
                   encodeURIComponent(file) + '?width=900';
         img.alt = label;
-        img.style.display = 'block';
+        imgLink.href = 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(file);
+        imgLink.style.display = 'block';
       }
 
       var link = document.getElementById('dish_link');
