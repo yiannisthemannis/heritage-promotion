@@ -52,6 +52,12 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             var bounds = [];
+            var seen = {};
+
+            data.results.bindings.forEach(function(row) {
+            var qidCheck = row.item.value.split('/').pop();
+            if (seen[qidCheck]) return;
+            seen[qidCheck] = true;
 
             data.results.bindings.forEach(function(row) {
                 var point = row.coord.value.replace("Point(", "").replace(")", "").split(" ");
